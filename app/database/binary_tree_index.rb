@@ -45,11 +45,4 @@ class BTreeIndex
     yield node
     in_order(node.right, &block)
   end
-
-  def post_order(node=@root, &block)
-    return if node.nil?
-    post_order(node.right, &block)
-    yield node
-    post_order(node.left, &block)
-  end
 end

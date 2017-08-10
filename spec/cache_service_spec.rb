@@ -1,5 +1,5 @@
 require "rspec"
-require_relative '../lib/cache_service'
+require_relative '../app/cache_service'
 
 Key = Struct.new(:attribute, :order)
 

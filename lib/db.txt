@@ -1,2 +1,0 @@
-Deer|John|Blue|10/22/1999
-Honey|Jane|Green|10/22/1992

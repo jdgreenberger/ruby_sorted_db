@@ -1,5 +1,5 @@
 require "rspec"
-require_relative '../lib/database_service'
+require_relative '../app/database_service'
 
 describe DatabaseService do
   describe "initialization" do

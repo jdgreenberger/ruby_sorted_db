@@ -9,4 +9,4 @@ questions
 # delegator methods, lambdas
 # folder structure
 # gems, bundler, bundler / exec
-# access to class without requiring
+# using bundler.require?, require_relative
