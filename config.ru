@@ -1,6 +1,5 @@
-require 'grape'
-# require 'rubygems'
-# require 'bundler/setup'
-require './twitter'
+require './lib/api'
+require 'rubygems'
+require 'bundler/setup'
 
-run Twitter::API
+run API

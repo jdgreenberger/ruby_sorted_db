@@ -4,8 +4,9 @@ questions
 # best way to test?
 	- access to variables across contexts
 	- expectations
-# when to use module/class 
+# when to use module/class (module as namespace?)
 # self. method
 # delegator methods, lambdas
 # folder structure
-# gems
+# gems, bundler, bundler / exec
+# access to class without requiring
