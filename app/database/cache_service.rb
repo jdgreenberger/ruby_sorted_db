@@ -13,7 +13,7 @@ class CacheService
 
 	def add_index(name, keys)
 		btree = BTreeIndex.new(keys)
-		@cache.each { |record| btree.insert(record) }
+		@cache.each { |record| btree.insert(record) } 
 		@indexes[name] = btree
 	end
 

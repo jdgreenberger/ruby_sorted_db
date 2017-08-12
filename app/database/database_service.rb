@@ -5,7 +5,7 @@ class DatabaseService
 	def initialize(db_file_path=nil)
 		records = nil
 		@db_file_path = db_file_path || File.dirname(__FILE__) + '/db.txt'
-		open(@db_file_path, 'r') do |f| 
+		File.open(@db_file_path, 'r') do |f| 
 			records = f.map { |line| deserialize(line) } 
 		end
 		@cache_service = CacheService.new(records)
@@ -14,12 +14,12 @@ class DatabaseService
 	def create(record)
 		@cache_service.add(record)
 		open(@db_file_path, 'a') do |f| 
-			f.puts serialize(record) 
+			f.puts serialize record
 		end
 	end
 
 	def serialize(record)
-		record.values.join('|')
+		record.values.join '|'
 	end
 
 	def deserialize(record)

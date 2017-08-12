@@ -1,5 +1,5 @@
-require './app/api'
+require './config/boot'
 require 'rubygems'
 require 'bundler/setup'
 
-run API
+run Boot

@@ -13,10 +13,10 @@ class BTreeIndex
         if content[key.attribute] == @content[key.attribute] # attribute is equal, try the next 
           next
         end
-        nodeIsLess = content[key.attribute] < @content[key.attribute] 
-        if (nodeIsLess && key.order == 'asc') || (!nodeIsLess && key.order == 'desc')
+        node_is_less = content[key.attribute] < @content[key.attribute] 
+        if (node_is_less && key.order == 'asc') || (!node_is_less && key.order == 'desc')
           @left.nil? ? @left = Node.new( content ) : @left.insert( content, keys )
-        elsif (nodeIsLess && key.order == 'desc') || (!nodeIsLess && key.order == 'asc')
+        elsif (node_is_less && key.order == 'desc') || (!node_is_less && key.order == 'asc')
           @right.nil? ? @right = Node.new( content ) : @right.insert( content, keys )
         end
         return

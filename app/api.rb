@@ -1,23 +1,18 @@
 require 'grape'
-require_relative './database/database_service'
 require_relative './record_translation'
+
+include RecordTranslation
 
 class API < Grape::API
 
+	attr_accessor :database_service
+
+	def initialize(database_service)
+		@database_service = database_service
+	end
 	# version 'v1', using: :header, vendor: 'geek.co.il'
 	# prefix :api
-	include RecordTranslation
 	format :json
-	helpers do
-		def database_service
-			@database_service ||= DatabaseService.new
-		end
-	end
-
-	desc "Says Hello"
-	get :hello do 
-		'hello world'
-	end
 
 	desc 'Adds a record.'
 	post :records do 
@@ -25,7 +20,7 @@ class API < Grape::API
 			# some input validation
       # requires :status, type: String, desc: 'Your status.'
     end
-    database_service.create(parse_line(params[:record]))
+    database_service.create(deserialize_line(params[:record]))
 	end 
 
 	get :records do
