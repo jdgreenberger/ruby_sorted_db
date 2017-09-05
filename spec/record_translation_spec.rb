@@ -1,26 +1,27 @@
-require "rspec"
+# frozen_string_literal: true
+
+require 'rspec'
 require './app/record_translation'
 
 describe RecordTranslation do
-
   describe 'deserialize_line' do
-
     describe 'invalid input' do
-
     end
 
     describe 'valid input' do
-      let(:expected_output) { { 
-        last_name: 'Honey', 
-        first_name: 'Jane', 
-        favorite_color: 'Green', 
-        dob: '10/22/1992'
-      } }
+      let(:expected_output) do
+        {
+          last_name: 'Honey',
+          first_name: 'Jane',
+          favorite_color: 'Green',
+          dob: '10/22/1992'
+        }
+      end
       [
         { context: 'comma separated line without trailing spaces', input: 'Honey,Jane,Green,10/22/1992' },
         { context: 'comma separated line with trailing spaces', input: 'Honey  , Jane ,Green, 10/22/1992  ' },
         { context: 'pipe separated line without trailing spaces', input: 'Honey,Jane,Green,10/22/1992' },
-        { context: 'pipe separated line with trailing spaces', input: 'Honey  | Jane |Green| 10/22/1992  ' },
+        { context: 'pipe separated line with trailing spaces', input: 'Honey  | Jane |Green| 10/22/1992  ' }
       ].each do |test|
         context test[:context] do
           it 'returns a deserialized object' do
@@ -31,21 +32,21 @@ describe RecordTranslation do
     end
   end
 end
-    # context 'input not include a valid character to deserialize' do
+# context 'input not include a valid character to deserialize' do
 
-    #   it 'throws an error' do
+#   it 'throws an error' do
 
-    #   end
-    #   # expect(RecordTranslation.deserialize_line('honey.jane.green.10/12/1992')).to.throw 'Invalid input'
-    # end
+#   end
+#   # expect(RecordTranslation.deserialize_line('honey.jane.green.10/12/1992')).to.throw 'Invalid input'
+# end
 
-    # context 'input contains too many fields' do
+# context 'input contains too many fields' do
 
-    # end
+# end
 
-    # context 'input contains too few fields' do
+# context 'input contains too few fields' do
 
-    # end
+# end
 
 # module RecordTranslation
 #   def self.deserialize_line(line)

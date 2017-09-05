@@ -1,16 +1,19 @@
-require "rspec"
+# frozen_string_literal: true
+
+require 'rspec'
 require './app/database/cache_service'
 
 Key = Struct.new(:attribute, :order)
 
 describe CacheService do
-  
   let(:cache_service) { CacheService.new([]) }
-  let(:seed_records) { [
-    {:last_name=>"Honey", :first_name=>"Jane", :favorite_color=>"Green", :dob=>"10/22/1992"},
-    {:last_name=>"Deer", :first_name=>"John", :favorite_color=>"Blue", :dob=>"10/22/1999"},
-    {:last_name=>"Grove", :first_name=>"Ashley", :favorite_color=>"Blue", :dob=>"10/22/1999"}
-  ] }
+  let(:seed_records) do
+    [
+      { last_name: 'Honey', first_name: 'Jane', favorite_color: 'Green', dob: '10/22/1992' },
+      { last_name: 'Deer', first_name: 'John', favorite_color: 'Blue', dob: '10/22/1999' },
+      { last_name: 'Grove', first_name: 'Ashley', favorite_color: 'Blue', dob: '10/22/1999' }
+    ]
+  end
 
   describe 'add_index' do
     context 'one attribute' do

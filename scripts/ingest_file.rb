@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './app/file_parser'
 
 file_parser = FileParser.new

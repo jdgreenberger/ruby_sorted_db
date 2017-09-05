@@ -1,3 +1,5 @@
-source "http://rubygems.org"
+# frozen_string_literal: true
 
-gem "grape"
+source 'http://rubygems.org'
+
+gem 'grape'
