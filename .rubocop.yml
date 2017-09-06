@@ -8,3 +8,5 @@ Metrics/BlockLength:
   Enabled: true
   Exclude:
     - spec/**/*
+Metrics/CyclomaticComplexity:
+  Max: 7
