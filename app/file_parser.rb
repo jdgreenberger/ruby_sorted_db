@@ -5,12 +5,12 @@ require './app/record_translation'
 
 class FileParser
   def initialize
-    @databaseService = DatabaseService.new
+    @database_service = DatabaseService.new
   end
 
-  def ingest_file(filePath)
-    File.open(filePath, 'r') do |f|
-      f.each { |line| @databaseService.create RecordTranslation.deserialize_line(line) }
+  def ingest_file(file_path)
+    File.open(file_path, 'r') do |f|
+      f.each { |line| @database_service.create RecordTranslation.deserialize_line(line) }
     end
   end
 end

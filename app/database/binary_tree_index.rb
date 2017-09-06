@@ -10,19 +10,26 @@ class BTreeIndex
       @right = nil
     end
 
-    def insert(content, keys)
-      keys.each do |key|
+    def find_child_direction(content, keys)
+      direction = nil
+      keys.any? do |key|
         next if content[key.attribute] == @content[key.attribute] # attribute is equal, try the next
         node_is_less = content[key.attribute] < @content[key.attribute]
-        if (node_is_less && key.order == 'asc') || (!node_is_less && key.order == 'desc')
-          @left.nil? ? @left = Node.new(content) : @left.insert(content, keys)
-        elsif (node_is_less && key.order == 'desc') || (!node_is_less && key.order == 'asc')
-          @right.nil? ? @right = Node.new(content) : @right.insert(content, keys)
-        end
-        return
+        direction = case key.order
+                    when 'asc' then node_is_less ? 'left' : 'right'
+                    when 'desc' then node_is_less ? 'right' : 'left'
+                    end
       end
-      # all attribute keys are equal, arbitrarily pick left child
-      @left.nil? ? @left = Node.new(content) : @left.insert(content, keys)
+      direction || 'left' # all attribute keys are equal, arbitrarily pick left child
+    end
+
+    def insert(content, keys)
+      direction = find_child_direction(content, keys)
+      if direction == 'left'
+        @left.nil? ? @left = Node.new(content) : @left.insert(content, keys)
+      else
+        @right.nil? ? @right = Node.new(content) : @right.insert(content, keys)
+      end
     end
   end
 

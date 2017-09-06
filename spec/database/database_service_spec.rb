@@ -1,11 +1,22 @@
 # frozen_string_literal: true
 
 require 'rspec'
+require 'tempfile'
 require './app/database/database_service'
 
 describe DatabaseService do
-  let(:db_file_path) { File.dirname(__FILE__) + '/db_spec.txt' }
-  let(:db_service) { DatabaseService.new(db_file_path) }
+  let(:db_file) { Tempfile.new('db_spec') }
+
+  before do
+    db_file.write("Deer|John|Blue|10/22/1999\nHoney|Jane|Green|10/22/1992\n")
+    db_file.rewind
+  end
+
+  after do
+    db_file.unlink
+  end
+
+  let(:db_service) { DatabaseService.new(db_file.path) }
   let(:cache_service) { db_service.instance_variable_get(:@cache_service) }
 
   describe 'initialization' do
@@ -17,8 +28,18 @@ describe DatabaseService do
       cache_service = db_service.instance_variable_get(:@cache_service)
       cache = cache_service.instance_variable_get(:@cache)
       expect(cache).to eq([
-                            { last_name: 'Deer', first_name: 'John', favorite_color: 'Blue', dob: '10/22/1999' },
-                            { last_name: 'Honey', first_name: 'Jane', favorite_color: 'Green', dob: '10/22/1992' }
+                            {
+                              last_name: 'Deer',
+                              first_name: 'John',
+                              favorite_color: 'Blue',
+                              dob: '10/22/1999'
+                            },
+                            {
+                              last_name: 'Honey',
+                              first_name: 'Jane',
+                              favorite_color: 'Green',
+                              dob: '10/22/1992'
+                            }
                           ])
     end
   end
@@ -36,31 +57,17 @@ describe DatabaseService do
 
   describe 'create' do
     before do
-      # stub cache service method
-      # cache_service.stub
       db_service.create(last_name: 'doe',
                         first_name: 'john',
                         favorite_color: 'green',
                         dob: '12/12/1999')
     end
 
-    after do
-      # remove line
-      File.open(db_file_path, 'a') do |f|
-      end
-    end
-
-    it 'adds the record to the cache' do
-      # cache_service = db_service.instance_variable_get(:@cache_service)
-      # cache = cache_service.instance_variable_get(:@cache)
-    end
-
     it 'serializes and adds the record to the database file' do
-      File.open(db_file_path, 'r') do |f|
+      File.open(db_file.path, 'r') do |f|
         lines = f.map { |line| line }
-        p lines
         expect(lines.length).to eq(3)
-        expect(lines[3]).to. eq('doe|john|green|12/12/1999\n')
+        expect(lines[2]).to eq("doe|john|green|12/12/1999\n")
       end
     end
   end
